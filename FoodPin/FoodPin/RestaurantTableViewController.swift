@@ -39,7 +39,7 @@ class RestaurantTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         
-        let optionMenu = UIAlertController(title: nil, message: "What do you want to do?", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let optionMenu = UIAlertController(title: nil, message: "What do you want to do?", preferredStyle: .ActionSheet)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
         optionMenu.addAction(cancelAction)
@@ -54,17 +54,18 @@ class RestaurantTableViewController: UITableViewController {
         optionMenu.addAction(callAction)
         
         let isVisitedTitle = (restaurantIsVisited[indexPath.row]) ? "I've not been here" : "I've been here"
-        let isVisitedAction = UIAlertAction(title: isVisitedTitle, style: .Default, handler: {
+        let isVisitedAction = UIAlertAction(title: "I've been here", style: .Default, handler: {
             (action:UIAlertAction!) -> Void in
             
             let cell = tableView.cellForRowAtIndexPath(indexPath)
-            self.restaurantIsVisited[indexPath.row] = (self.restaurantIsVisited[indexPath.row]) ? false : true
+            self.restaurantIsVisited[indexPath.row] = true
             cell?.accessoryType = (self.restaurantIsVisited[indexPath.row]) ? .Checkmark : .None
         })
         optionMenu.addAction(isVisitedAction)
                 self.presentViewController(optionMenu, animated: true, completion: nil)
         
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        
         
     }
 
@@ -86,6 +87,7 @@ class RestaurantTableViewController: UITableViewController {
         cell.thumbnailImageView.image = UIImage(named: restaurantImages[indexPath.row])
         cell.locationLabel.text = restaurantLocations[indexPath.row]
         cell.typeLabel.text = restaurantTypes[indexPath.row]
+        
         if restaurantIsVisited[indexPath.row] {
             cell.accessoryType = .Checkmark
         } else {
